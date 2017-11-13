@@ -79,7 +79,6 @@ reverse() {
 }
 
 include() {
-    sed=''
     os="$(uname -s)"
     if [ $os = 'Darwin' ]; then
         sed='gsed'
@@ -96,14 +95,13 @@ include() {
         for e in ${params[*]:1}; do
             if [ $e = '-d' ]; then
                 d=0
-                echo '' >> $file
                 break
             fi
             if grep -Fxq $e $file; then
                 out $e' is already tracked'
                 continue
             fi
-            $sed -i "4i $e" $file
+            insertf
         done
     fi
     if [ ${params[0]} = '-d' ]; then
@@ -116,21 +114,37 @@ include() {
                 out $e ' is already tracked'
                 continue
             fi
-            $sed -i "4i $e" $file
+            insertd
         done
     fi
     if [ $f -eq 0 ]; then
-        echo 'FIL'
+        add=1
+        for e in ${params[*]}; do
+            if [ $e = '-f' ]; then
+                add=0
+                continue
+            fi
+            if [ $add -eq 0 ]; then
+                insertf
+            fi
+        done
     fi
     if [ $d -eq 0 ]; then
-        echo 'DIR'
+        add=1
+        for e in ${params[*]}; do
+            if [ $e = '-d' ]; then
+                add=0
+                continue
+            fi
+            if [ $add -eq 0 ]; then
+                insertd
+            fi
+        done
     fi
 }
 
 clean() {
-    # read from file -> remove all those things
-    # thing to worry about, how to differentiate between files and folders
-    # my guess is to put a slash behhind all dirs in the include function
+    # if line contains /, then is it dir (i.e, mydir/ myfile.txt)
     return
 }
 
@@ -144,6 +158,14 @@ contains() {
         fi
     done
     return 1
+}
+
+insertf() {
+    $sed -i "4i $e" $file
+}
+
+insertd() {
+    $sed -i "4i $e/" $file
 }
 
 integer() {
@@ -203,4 +225,5 @@ lvls=0
 yellow='y'
 green='g'
 red='r'
+sed=''
 run $*
