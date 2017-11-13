@@ -1,16 +1,14 @@
-# ---------------------------------------------------------------------------- #
+
 # MAIN FUNCTIONS
 # ---------------------------------------------------------------------------- #
 run() {
+    validate
     if ! [ $# -eq 0 ]; then
-        # CHECK SILENT PARAM
         if contains '-s' ${params[*]}; then
             quiet=0
         fi
-        # CHECK IF BACKUP
-        validate
         if integer $1; then
-            levels=$1
+            lvls=$1
             if [ $# -gt 1 ]; then
                 params=${*:2}
             fi
@@ -33,7 +31,6 @@ validate() {
         for element in ${params[*]}; do
             e=$element
             if ! contains $element ${options[*]}; then
-                # TEST TO SEE IF FILES EXIST AND ASK PRESENT OPTION TO ADD
                 if [[ $e =~ ^[/-]+[a-zA-Z0-9] ]]; then
                     color $red 'invalid parameter(s): '$e
                     terminate
@@ -49,20 +46,18 @@ validate() {
             fi
         fi
     fi
-    file='.clean'
-    code='0x636c65616e'
     if test -f '.clean'; then
         if ! grep -Fxq $code $file; then
             color $red 'found incongruous hidden clean file -> aborting'
             terminate
+        else
+            out 'found .clean file' # NOT WORKING W/ -s
         fi
-        out 'found .clean file -> proceeding with updates'
     else
         out 'creating .clean file'
         echo '------------' > $file
         echo 'A CLEAN FILE' >> $file
         echo '------------' >> $file
-        echo '' >> $file
         echo '------------' >> $file
         echo $code >> $file
     fi
@@ -73,19 +68,63 @@ validate() {
 }
 
 forward() {
-    cd $directory
+    cd $home
 }
 
 reverse() {
-    for ((i = 0; i < $levels; i++)); do
+    for ((i = 0; i < $lvls; i++)); do
         echo 'went up a dir'
         cd ..
     done
 }
 
 include() {
+    sed=''
+    os="$(uname -s)"
+    if [ $os = 'Darwin' ]; then
+        sed='gsed'
+    elif [ $os = 'Linux' ]; then
+        sed='sed'
+    else
+        color $red 'Operating system not supported.'
+        terminate
+    fi
     out 'including new parameters'
-    # for loop to include -f and -d items respectively
+    f=1
+    d=1
+    if [ ${params[0]} = '-f' ]; then
+        for e in ${params[*]:1}; do
+            if [ $e = '-d' ]; then
+                d=0
+                echo '' >> $file
+                break
+            fi
+            if grep -Fxq $e $file; then
+                out $e' is already tracked'
+                continue
+            fi
+            $sed -i "4i $e" $file
+        done
+    fi
+    if [ ${params[0]} = '-d' ]; then
+        for e in ${params[*]:1}; do
+            if [ $e = '-f' ]; then
+                f=0
+                break
+            fi
+            if grep -Fxq $e $file; then
+                out $e ' is already tracked'
+                continue
+            fi
+            $sed -i "4i $e" $file
+        done
+    fi
+    if [ $f -eq 0 ]; then
+        echo 'FIL'
+    fi
+    if [ $d -eq 0 ]; then
+        echo 'DIR'
+    fi
 }
 
 clean() {
@@ -155,10 +194,12 @@ terminate() {
 # ---------------------------------------------------------------------------- #
 # GLOBAL
 # ---------------------------------------------------------------------------- #
-directory=$(pwd)
-params=$*
-levels=0
+code='0x636c65616e'
+file='.clean'
+params=($*)
+home=$(pwd)
 quiet=1
+lvls=0
 yellow='y'
 green='g'
 red='r'
