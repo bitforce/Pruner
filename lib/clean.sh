@@ -49,9 +49,7 @@ validate() {
     if test -f '.clean'; then
         if ! grep -Fxq 'A CLEAN FILE' $file; then
             color $red 'found incongruous hidden clean file -> aborting'
-            terminate
-        else
-            out 'found .clean file' # NOT WORKING W/ -s
+            terminate            
         fi
     else
         out 'creating .clean file'
@@ -194,7 +192,7 @@ remove() {
     if [ $1 = d ]; then
         x=${x%?}
     fi
-    find . -type $1 -name $x -delete
+    find . -type $1 -name $x -delete 
 }
 
 silent() {
