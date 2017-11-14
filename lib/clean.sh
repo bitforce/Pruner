@@ -47,7 +47,7 @@ validate() {
         fi
     fi
     if test -f '.clean'; then
-        if ! grep -Fxq $code $file; then
+        if ! grep -Fxq 'A CLEAN FILE' $file; then
             color $red 'found incongruous hidden clean file -> aborting'
             terminate
         else
@@ -59,7 +59,6 @@ validate() {
         echo 'A CLEAN FILE' >> $file
         echo '------------' >> $file
         echo '------------' >> $file
-        echo $code >> $file
     fi
     if test -f '.gitignore' && ! grep -Fxq '.clean' '.gitignore'; then
         out '.gitignore file found -> including .clean'
@@ -144,7 +143,19 @@ include() {
 }
 
 clean() {
-    # if line contains /, then is it dir (i.e, mydir/ myfile.txt)
+    while read line; do
+        if [ "$line" = '------------' ]; then
+            continue
+        fi
+        if [ "$line" = 'A CLEAN FILE' ]; then
+            continue
+        fi
+        if [[ $line =~ .*/.* ]]; then
+            remove d $line
+        else
+            remove f $line
+        fi
+    done < $file
     return
 }
 
@@ -176,6 +187,14 @@ integer() {
     else
         return 1
     fi
+}
+
+remove() {
+    x=$2
+    if [ $1 = d ]; then
+        x=${x%?}
+    fi
+    find . -type $1 -name $x -delete
 }
 
 silent() {
@@ -216,7 +235,6 @@ terminate() {
 # ---------------------------------------------------------------------------- #
 # GLOBAL
 # ---------------------------------------------------------------------------- #
-code='0x636c65616e'
 file='.clean'
 params=($*)
 home=$(pwd)
