@@ -9,7 +9,10 @@ run() {
 command() {
     dir='/usr/local/bin/'
     if test -d $dir; then
-        chmod +x 'lib/clean'
+        if test -f $dir'clean'; then
+            echo Overwriting existing clean command.
+        fi
+        chmod u+x 'lib/clean'
         cp 'lib/clean' $dir
         return 0
     else
@@ -27,3 +30,5 @@ man() {
         echo Issue locating and installing into appropriate directory: $dir
     fi
 }
+
+run
