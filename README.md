@@ -31,14 +31,13 @@ what is getting cleaned, simply
 specify the verbose flag.
 
 ###### flags
-
+```
 -d | --directory
 -v | --verbose
 -f | --file
-
+```
 
 ###### example
-
 ```
 clean . -d .ropeproject .cache .eggs -f \*.pyc \*.swp dump.txt
 clean 4 -f \*.class -d .ropeproject bin
