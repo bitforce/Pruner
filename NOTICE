@@ -1,0 +1,6 @@
+Perform testing and figure out all the kinks--perhaps create a testing env. In
+addition, you may want to rename this project since Homebrew already has a tap
+with the same name (find out what that tap does). Also, if there exist a brew
+repo name checker, figure out what names you can take; otherwise, search and
+find one, then make your project brew-tapable and then create a brew tap
+searcher.

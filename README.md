@@ -7,7 +7,7 @@ directories you specify.
 
 Setup
 ---
-`sh install.sh`
+`brew install clean` _or_ `./install.sh`
 
 Usage
 ---
@@ -39,8 +39,8 @@ specify the verbose flag.
 
 ###### example
 ```
-clean . -d .ropeproject .cache .eggs -f \*.pyc \*.swp dump.txt
-clean 4 -f \*.class -d .ropeproject bin
+$ clean . -d .ropeproject .cache .eggs -f \*.pyc \*.swp dump.txt
+$ clean 4 -f \*.class -d .ropeproject bin
 ```
 
 Note
