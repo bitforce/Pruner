@@ -7,7 +7,7 @@ directories you specify.
 
 Setup
 ---
-`brew install clean` _or_ `./install.sh`
+`brew install clean` _or_ `./setup/install`
 
 Usage
 ---
@@ -34,7 +34,9 @@ specify the verbose flag.
 ```
 -d | --directory
 -v | --verbose
+-r | --remove
 -f | --file
+-i | --info
 ```
 
 ###### example
@@ -50,7 +52,7 @@ the clean command from the project root unless specifying the levels of subdirec
 you are under. Running `man clean` will also bring up useful information about the 
 command.
 
-**Testing has been done on BSD & Darwin environments; however, the command is 
+**Testing has only been done on BSD & Darwin environments; however, the command is 
 intended to work across Linux platforms**
 
 License

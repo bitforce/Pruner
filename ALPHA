@@ -4,3 +4,8 @@ with the same name (find out what that tap does). Also, if there exist a brew
 repo name checker, figure out what names you can take; otherwise, search and
 find one, then make your project brew-tapable and then create a brew tap
 searcher.
+
+UPDATE
+------
+Found out that rinse is available and therefore, you should fix the project to 
+best standard and then change all the names to rinse.
