@@ -7,7 +7,7 @@ directories you specify.
 
 Setup
 ---
-`brew install clean` _or_ `./setup/install`
+`./install`
 
 Usage
 ---
@@ -35,14 +35,16 @@ specify the verbose flag.
 -d | --directory
 -v | --verbose
 -r | --remove
+-w | --wipe
 -f | --file
 -i | --info
+-h | --help
 ```
 
 ###### example
 ```
-$ clean . -d .ropeproject .cache .eggs -f \*.pyc \*.swp dump.txt
-$ clean 4 -f \*.class -d .ropeproject bin
+$ clean . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.txt'
+$ clean 4 -f \*.class -d .ropeproject
 ```
 
 Note
@@ -51,6 +53,8 @@ Installation assumes you are within the _Clean_ project directory. You must alwa
 the clean command from the project root unless specifying the levels of subdirectories 
 you are under. Running `man clean` will also bring up useful information about the 
 command.
+
+The long options do not work; rather they are stated simply for clarification.
 
 **Testing has only been done on BSD & Darwin environments; however, the command is 
 intended to work across Linux platforms**

@@ -1,0 +1,125 @@
+#!/bin/sh
+
+# -----------------------------------------------------------------------------
+# MAIN FUNCTIONS
+# -----------------------------------------------------------------------------
+
+validate() {
+    echo validating
+    echo $params
+    if ! [ -z "$params" ]; then
+        len=$(length $params)
+    fi
+    echo $len
+
+}
+
+forward() {
+    cd $home
+}
+
+reverse() {
+    for ((i = 0; i < $lvls; i++)); do
+        echo 'went up a dir'
+        cd ..
+    done
+}
+
+verbose() {
+    echo !
+}
+
+include() {
+    echo !
+}
+
+remove() {
+    echo !
+}
+
+info() {
+    while read line; do
+        echo !
+        if [ "$line" = '------------' ]; then
+            continue
+        fi
+        if [ "$line" = 'A CLEAN FILE' ]; then
+            continue
+        fi
+        echo $line
+    done < "$file"
+}
+
+help() {
+    echo !
+}
+
+run() {
+    validate
+    if [ $len -eq 0 ]; then
+        echo no params
+    elif integer $params -eq 0; then
+        echo first integer
+    else
+        echo params
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# ASSIST FUNCTIONS
+# -----------------------------------------------------------------------------
+
+contains() {
+    echo !
+}
+
+integer() {
+    case $1 in
+        (*[!0-9]*|'') return 1 ;;
+        (*) return 0 ;;
+    esac
+}
+
+length() {
+    count=0
+    for e in $1; do
+        echo $e 2> /dev/null # necessary to make this work?
+        count+=1
+    done
+    return $count
+}
+
+color() {
+    echo !
+}
+
+loop() {
+    for e in ${*}; do
+        echo $e
+    done
+}
+
+# -----------------------------------------------------------------------------
+# GLOBAL
+# -----------------------------------------------------------------------------
+
+while getopts ':hivd:f:r:' flag; do
+    case "${flag}" in
+        h) help; exit ;;
+        i) info; exit ;;
+        v) verbose=true;;
+        d) folders=${OPTARG} ;;
+        f) files=${OPTARG} ;;
+        r) trash=${OPTARG}; exit ;;
+        *) echo invalid argument; exit ;;
+    esac
+done
+
+file='.clean'
+params=$*
+len=0
+
+# -----------------------------------------------------------------------------
+# RUN
+# -----------------------------------------------------------------------------
+run
