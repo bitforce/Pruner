@@ -1,16 +1,16 @@
-.TH clean 1 "10 October 2017" "1.0" "clean man page"
+.TH pruner 1 "10 October 2017" "1.0" "pruner man page"
 
 .SH NAME
-clean -- lightweight project pruner
+pruner -- lightweight project pruner
 
 .SH SYNOPSIS
-clean [SUBDIRECTORY] [-saw] [-f FILE] [-d DIRECTORY]
+pruner [-iwv] [-r param] [-f file] [-d directory]
 
 .SH DESCRIPTION
 A configurable file/folder removal command in which you can specify which 
 files and directories you choose to delete by simply running the command.
-You can choose which directory (DIR) to clean from; the files (-f)/
-folders (-d) you specified (via initial clean or -a). If you find 
+You can choose which directory (DIR) to pruner from; the files (-f)/
+folders (-d) you specified (via initial pruner or -a). If you find 
 that you no longer need to remove those files, you can write (-w) 
 over your current configuration. If you don't appreciate the 
 output, you can also silent (-s) it.
@@ -25,8 +25,20 @@ path of directory/directories to be removed
 path of file/files to be removed
 
 .TP
+.B -r
+remove files/folders to be pruned
+
+.TP
+.B -i
+list files/folders to be pruned
+
+.TP
 .B -v
 verbose output
+
+.TP
+.B -w
+wipe .pruner file
 
 .SH AUTHOR
 Brandon Johnson | brandon.johnson.official@gmail.com

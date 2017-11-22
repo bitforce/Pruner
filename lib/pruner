@@ -1,0 +1,194 @@
+#!/bin/sh
+
+# -----------------------------------------------------------------------------
+# GLOBAL DEFINITIONS
+# -----------------------------------------------------------------------------
+
+file='.pruner'
+verbose=1
+
+# -----------------------------------------------------------------------------
+# MAIN FUNCTIONS
+# -----------------------------------------------------------------------------
+
+validate() {
+    if test -f $file; then
+        if ! grep -Fxq 'A CLEAN FILE' $file; then
+            color $red 'found incongruous hidden pruner file -> aborting'
+            exit
+        fi
+    else
+        create
+    fi
+    if test -f '.gitignore' && ! grep -Fxq $file '.gitignore'; then
+        echo '.gitignore file found -> including .pruner'
+        echo $file >> '.gitignore'
+    fi
+}
+
+forward() {
+    cd $home
+}
+
+reverse() {
+    for ((i = 0; i < $lvls; i++)); do
+        echo 'went up a dir'
+        cd ..
+    done
+}
+
+include() {
+    for e in $folders; do
+        if grep -Fxq $e/ $file; then
+            echo directory $e/ is already tracked
+            continue
+        fi
+        gsed -i "4i $e/" $file
+    done
+    for e in $files; do
+        if grep -Fxq $e $file; then
+            echo file $e is already tracked
+            continue
+        fi
+        gsed -i "4i $e" $file
+    done
+}
+
+remove() {
+    for e in $trash; do
+        if grep -Fxq $e $file; then
+            sed -i -e "s?$e??g" $file
+        else
+            echo parameter $e does not exist
+        fi
+    done
+}
+
+delete() {
+    x=$2
+    if [ $1 = d ]; then
+        x=${x%?}
+    fi
+    find . -type $1 -name $x -delete
+}
+
+info() {
+    while read line; do
+        if [ "$line" = '------------' ]; then
+                continue
+        fi
+        if [ "$line" = 'A CLEAN FILE' ]; then
+            continue
+        fi
+        echo $line
+    done < $file
+}
+
+help() {
+    echo "Usage: `basename $0` [-iwv] [-r param] [-f file] [-d directory]"
+    echo '      -v | --verbose  | more detailed output to the console'
+    echo '      -i | --info     | shows what's inside the .pruner file
+    echo '      -h | --help     | this'
+    echo
+    echo '      -r | --remove   | removes parameter from .pruner file'
+    echo '      -w | --wipe     | clears the .pruner file'
+    echo
+    echo '      -d | --folder   | include a folder'
+    echo '      -f | --file     | include a file'
+    echo
+}
+
+wipe() {
+    rm $file*
+    create
+}
+
+clean() {
+    while read line; do
+        if [ "$line" = '------------' ]; then
+            continue
+        fi
+        if [ "$line" = 'A CLEAN FILE' ]; then
+            continue
+        fi
+        if [[ $line =~ .*/.* ]]; then
+            delete 'd' $line
+        else
+            delete 'f' $line
+        fi
+    done < $file
+}
+
+run() {
+    validate
+    # clean | clean ARGS | clean N ARGS
+    if [ $# -eq 0 ]; then
+        clean
+    else
+        if integer $1; then
+            echo integer found
+            reverse
+            include
+            clean
+            forward
+            exit
+        fi
+        include
+        clean
+    fi
+}
+
+# -----------------------------------------------------------------------------
+# ASSIST FUNCTIONS
+# -----------------------------------------------------------------------------
+
+contains() {
+    for element in ${*:2}; do
+        if [ $1 = $element ]; then
+            return 0
+        fi
+    done
+    return 1
+}
+
+integer() {
+    case $1 in
+        (*[!0-9]*|'') return 1 ;;
+        (*) return 0 ;;
+    esac
+}
+
+create() {
+    echo '------------' > $file
+    echo 'A CLEAN FILE' >> $file
+    echo '------------' >> $file
+    echo '------------' >> $file
+}
+
+loop() {
+    for e in ${*}; do
+        echo $e
+    done
+}
+
+# -----------------------------------------------------------------------------
+# GLOBAL
+# -----------------------------------------------------------------------------
+
+while getopts ':hiwvr:f:d:' flag; do
+    case "${flag}" in
+        h) help; exit ;;
+        i) info; exit ;;
+        w) wipe; exit ;;
+        v) verbose=0 ;;
+        d) folders=${OPTARG} ;;
+        f) files=${OPTARG} ;;
+        r) trash=${OPTARG}; remove; exit ;;
+        *) echo invalid argument; exit ;;
+    esac
+done
+
+# -----------------------------------------------------------------------------
+# RUN
+# -----------------------------------------------------------------------------
+run $*

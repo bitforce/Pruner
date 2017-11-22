@@ -1,3 +1,4 @@
+#!/bin/sh
 run() {
     if command && man; then
         echo Command successfully installed.
@@ -9,18 +10,18 @@ run() {
 command() {
     dir='/usr/local/bin/'
     if test -d $dir; then
-        if test -f $dir'clean'; then
+        if test -f $dir'pruner'; then
             while true; do
-                read -p "Existing clean command found: overwrite? " ans
+                read -p "Existing pruner command found: overwrite? " ans
                 case $ans in
-                    [Yy]* ) echo Overwriting clean command.; break;;
+                    [Yy]* ) echo Overwriting pruner command.; break;;
                     [Nn]* ) echo 'Cancelling install'; exit;;
                     * ) echo "Please answer yes or no.";;
                 esac
             done
         fi
-        chmod u+x 'lib/clean'
-        cp 'lib/clean' $dir
+        chmod u+x 'lib/pruner'
+        cp 'lib/pruner' $dir
         return 0
     else
         echo Issue locating and installing into appropriate directory: $dir
@@ -31,7 +32,7 @@ command() {
 man() {
     dir='/usr/local/share/man/man1/'
     if test -d $dir; then
-        cp 'doc/clean.1' $dir
+        cp 'doc/pruner.1' $dir
         return 0
     else
         echo Issue locating and installing into appropriate directory: $dir

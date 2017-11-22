@@ -18,7 +18,7 @@ current one; however, you can be within subdirectories of your project
 and still clean it by simply specifying how many levels down from the 
 root (where the .clean file resides) you are. The program will detect 
 if you have a git directory and if so, create a _.gitignore_ if one 
-doesn't exist, and add _.clean_ to it so that you don't upload the 
+doesn't eist, and add _.clean_ to it so that you don't upload the 
 contents of your clean to github. This can simply be avoided as 
 well, by deleting the _.clean_ from your gitignore as it 
 doesn't add it every time you run the command. Also, 
@@ -41,9 +41,9 @@ specify the verbose flag.
 -h | --help
 ```
 
-###### example
+###### eample
 ```
-$ clean . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.txt'
+$ clean . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.tt'
 $ clean 4 -f \*.class -d .ropeproject
 ```
 
@@ -57,11 +57,11 @@ command.
 The long options do not work; rather they are stated simply for clarification.
 
 **Testing has only been done on BSD & Darwin environments; however, the command is 
-intended to work across Linux platforms**
+intended to work across Linu platforms**
 
 License
 ---
-Licensed under the WTFPL - see [LICENSE](./LICENSE) for explicit details.
+Licensed under the WTFPL - see [LICENSE](./LICENSE) for eplicit details.
 
 Version
 ---
@@ -69,6 +69,6 @@ Version
 
 Author 
 ---
-[LinkedIn](https://www.linkedin.com/in/brandonjohnsonxyz/)
+[LinkedIn](https://www.linkedin.com/in/brandonjohnsonyz/)
 [Personal](https://brandonjohnson.life)
 [GitHub](https://github.com/bitforce)
