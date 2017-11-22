@@ -41,7 +41,7 @@ specify the verbose flag.
 -h | --help
 ```
 
-###### eample
+###### example
 ```
 $ clean . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.tt'
 $ clean 4 -f \*.class -d .ropeproject
