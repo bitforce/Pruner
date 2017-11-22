@@ -7,7 +7,7 @@ directories you specify.
 
 Setup
 ---
-`./install` _or_ `brew install pruner`
+`./install`
 
 Usage
 ---
