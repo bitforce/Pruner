@@ -1,30 +1,30 @@
-# Clean
+# Pruner
 
 Overview
 ---
-A configurable clean command which cleans your project based on files and 
+A configurable prune command which cleans your project based on files and 
 directories you specify.
 
 Setup
 ---
-`./install`
+`./install` _or_ `brew install pruner`
 
 Usage
 ---
 It works by creating a hidden file which contains all the folders and files you 
-specified to be cleaned out; referencing it whenever you run the clean command. 
-Depending on the flags you choose. The default directory for clean is the 
+specified to be cleaned out; referencing it whenever you run the pruner command. 
+Depending on the flags you choose. The default directory for pruner is the 
 current one; however, you can be within subdirectories of your project 
 and still clean it by simply specifying how many levels down from the 
-root (where the .clean file resides) you are. The program will detect 
+root (where the .prune file resides) you are. The program will detect 
 if you have a git directory and if so, create a _.gitignore_ if one 
-doesn't eist, and add _.clean_ to it so that you don't upload the 
-contents of your clean to github. This can simply be avoided as 
-well, by deleting the _.clean_ from your gitignore as it 
+doesn't eist, and add _.prune_ to it so that you don't upload the 
+contents of your pruner to github. This can simply be avoided as 
+well, by deleting the _.prune_ from your gitignore as it 
 doesn't add it every time you run the command. Also, 
 everytime afterwards, all you need to do is run 
-`clean` and it will work based on previously 
-saved settings. Also by default, the clean 
+`pruner` and it will work based on previously 
+saved settings. Also by default, the pruner
 command runs silently, but if you are 
 interested in what it's doing and 
 what is getting cleaned, simply 
@@ -43,21 +43,27 @@ specify the verbose flag.
 
 ###### example
 ```
-$ clean . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.tt'
-$ clean 4 -f \*.class -d .ropeproject
+$ pruner . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.tt'
+$ pruner 4 -f \*.class -d .ropeproject
 ```
 
 Note
 ---
-Installation assumes you are within the _Clean_ project directory. You must always run 
-the clean command from the project root unless specifying the levels of subdirectories 
-you are under. Running `man clean` will also bring up useful information about the 
+Installation assumes you are within the _Pruner_ project directory. You must always run 
+the pruner command from the project root unless specifying the levels of subdirectories 
+you are under. Running `man pruner` will also bring up useful information about the 
 command.
 
 The long options do not work; rather they are stated simply for clarification.
 
 **Testing has only been done on BSD & Darwin environments; however, the command is 
 intended to work across Linu platforms**
+
+Update : 11-21-17
+---
+Turns out everything this does can essentially be done in one line using the `find` 
+command and the `-prune` option (_go figure_); however, if you do find this more 
+useful, then I'm glad your appreciation does this project some justice.
 
 License
 ---

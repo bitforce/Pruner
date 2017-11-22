@@ -4,7 +4,7 @@
 # GLOBAL DEFINITIONS
 # -----------------------------------------------------------------------------
 
-file='.pruner'
+file='.prune'
 verbose=1
 
 # -----------------------------------------------------------------------------
@@ -21,7 +21,7 @@ validate() {
         create
     fi
     if test -f '.gitignore' && ! grep -Fxq $file '.gitignore'; then
-        echo '.gitignore file found -> including .pruner'
+        echo '.gitignore file found -> including .prune'
         echo $file >> '.gitignore'
     fi
 }

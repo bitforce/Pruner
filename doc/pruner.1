@@ -11,9 +11,11 @@ A configurable file/folder removal command in which you can specify which
 files and directories you choose to delete by simply running the command.
 You can choose which directory (DIR) to pruner from; the files (-f)/
 folders (-d) you specified (via initial pruner or -a). If you find 
-that you no longer need to remove those files, you can write (-w) 
-over your current configuration. If you don't appreciate the 
-output, you can also silent (-s) it.
+that you no longer need to remove those files, you can wipe (-w) 
+your current configuration. If you don't appreciate the silence, 
+you can always set verbose (-v) output. If you realize you no 
+longer need to prune certain files/folders, feel free to 
+remove (-r) said parameter from the .prune tracker.
 
 .SH OPTIONS
 .TP
@@ -34,11 +36,11 @@ list files/folders to be pruned
 
 .TP
 .B -v
-verbose output
+verbose console output
 
 .TP
 .B -w
-wipe .pruner file
+wipe .prune file
 
 .SH AUTHOR
 Brandon Johnson | brandon.johnson.official@gmail.com
