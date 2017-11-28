@@ -45,6 +45,7 @@ specify the verbose flag.
 ```
 $ pruner . -d '.ropeproject .cache .eggs' -f '\*.pyc \*.swp dump.tt'
 $ pruner 4 -f \*.class -d .ropeproject
+$ pruner
 ```
 
 Note
@@ -56,11 +57,10 @@ command.
 
 The long options do not work; rather they are stated simply for clarification.
 
-**Testing has only been done on BSD & Darwin environments; however, the command is 
-intended to work across Linu platforms**
+Testing has only been done on BSD & Darwin environments; however, the command is 
+intended to work across Linux platforms
 
-Update : 11-21-17
----
+#### Update : 11-21-17
 Turns out everything this does can essentially be done in one line using the `find` 
 command and the `-prune` option (_go figure_); however, if you do find this more 
 useful, then I'm glad your appreciation does this project some justice.

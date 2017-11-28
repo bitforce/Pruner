@@ -4,18 +4,24 @@
 pruner -- lightweight project pruner
 
 .SH SYNOPSIS
-pruner [-iwv] [-r param] [-f file] [-d directory]
+pruner [\fIlevel\fR] [-iwv] [-r param] [-f file] [-d directory]
 
 .SH DESCRIPTION
 A configurable file/folder removal command in which you can specify which 
 files and directories you choose to delete by simply running the command.
-You can choose which directory (DIR) to pruner from; the files (-f)/
-folders (-d) you specified (via initial pruner or -a). If you find 
-that you no longer need to remove those files, you can wipe (-w) 
-your current configuration. If you don't appreciate the silence, 
-you can always set verbose (-v) output. If you realize you no 
-longer need to prune certain files/folders, feel free to 
-remove (-r) said parameter from the .prune tracker.
+You can choose which subdirectory to pruner from; the files (-f) and
+folders (-d) you specified. If you find  that you no longer need the
+parameters, you can wipe (-w) your current configuration completely 
+or remove (-r) specific ones as you see fit. If you don't 
+appreciate the silence, you can always set verbose (-v) 
+output. Make sure that when you do remove paramters 
+that are directories, you add a forward slash to 
+indicate that they are in fact folders.
+
+In the case that you are down a few subdirs, you can still use the command 
+in the same way, simply add the number of subdirectories you are down 
+from the root (where .prune should be); this is indicated by the 
+\fIlevel\fR option.
 
 .SH OPTIONS
 .TP
@@ -41,6 +47,22 @@ verbose console output
 .TP
 .B -w
 wipe .prune file
+
+.SH EXAMPLES
+.TP
+pruner -f 'crap.class dump.pyc' -d 'badfolder goodfolder'
+.TP
+pruner -f 'didntread.txt morecrap.class' -d bin
+.TP
+pruner -i
+.TP
+pruner -r 'crap.class badfolder/' -v
+.TP
+pruner -r bin/
+.TP
+pruner 2 -f forgotthis.md -d addthistoo
+.TP
+pruner -w
 
 .SH AUTHOR
 Brandon Johnson | brandon.johnson.official@gmail.com
