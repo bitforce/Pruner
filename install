@@ -28,7 +28,7 @@ install_bin() {
         chmod u+x 'src/pruner'
         cp 'src/pruner' $bindir
     else
-        echo Issue locating appropriate directory: $bindir
+        echo Issue locating appropriate directory: $bindir\nFailed to Install.
         exit 1
     fi
 }
@@ -37,7 +37,7 @@ install_man() {
     if test -d $mandir; then
         cp 'doc/pruner.1' $mandir
     else
-        echo Issue locating appropriate directory: $mandir
+        echo Issue locating appropriate directory: $mandir\nFailed to Install.
         exit 1
     fi
 }
