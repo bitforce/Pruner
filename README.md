@@ -60,6 +60,11 @@ The long options do not work; rather they are stated simply for clarification.
 Testing has only been done on BSD & Darwin environments; however, the command is 
 intended to work across Linux platforms
 
+**If the command is not executable, make it so with the following command** 
+`chmod +x install`
+
+This will make executable as root (`chmod u+x` only applies to user level permission).
+
 #### Update : 11-21-17
 Turns out everything this does can essentially be done in one line using the `find` 
 command and the `-prune` option (_go figure_); however, if you do find this more 

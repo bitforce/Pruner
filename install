@@ -21,12 +21,12 @@ install_bin() {
                 case $ans in
                     [Yy]* ) echo Overwriting pruner command.; break;;
                     [Nn]* ) echo 'Cancelling install'; exit;;
-                    * ) echo "Please answer yes or no.";;
+                    * ) echo "Please answer yes [Y/y] or no [N/n].";;
                 esac
             done
         fi
-        chmod u+x 'src/pruner'
-        cp 'src/pruner' $bindir
+        chmod +x "src/pruner"
+        sudo cp "src/pruner" $bindir
     else
         echo Issue locating appropriate directory: $bindir\nFailed to Install.
         exit 1
@@ -35,7 +35,8 @@ install_bin() {
 
 install_man() {
     if test -d $mandir; then
-        cp 'doc/pruner.1' $mandir
+        sudo cp 'doc/pruner.1' $mandir
+        echo Command successfully installed.
     else
         echo Issue locating appropriate directory: $mandir\nFailed to Install.
         exit 1
@@ -44,4 +45,3 @@ install_man() {
 
 install_bin
 install_man
-echo Command successfully installed.

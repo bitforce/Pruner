@@ -3,14 +3,12 @@
 # -----------------------------------------------------------------------------
 # GLOBAL DEFINITIONS
 # -----------------------------------------------------------------------------
-
 file='.prune'
 verbose=1
 
 # -----------------------------------------------------------------------------
 # MAIN FUNCTIONS
 # -----------------------------------------------------------------------------
-
 validate() {
     if test -f $file; then
         if ! grep -Fxq 'A CLEAN FILE' $file; then
@@ -25,18 +23,15 @@ validate() {
         echo $file >> '.gitignore'
     fi
 }
-
 forward() {
     cd $home
 }
-
 reverse() {
     for ((i = 0; i < $lvls; i++)); do
         echo 'went up a dir'
         cd ..
     done
 }
-
 include() {
     for e in $folders; do
         if grep -Fxq $e/ $file; then
@@ -53,7 +48,6 @@ include() {
         gsed -i "4i $e" $file
     done
 }
-
 remove() {
     for e in $trash; do
         if grep -Fxq $e $file; then
@@ -63,7 +57,6 @@ remove() {
         fi
     done
 }
-
 delete() {
     x=$2
     if [ $1 = d ]; then
@@ -71,7 +64,6 @@ delete() {
     fi
     find . -type $1 -name $x -delete
 }
-
 info() {
     while read line; do
         if [ "$line" = '------------' ]; then
@@ -83,7 +75,6 @@ info() {
         echo $line
     done < $file
 }
-
 help() {
     echo "Usage: `basename $0` [-iwv] [-r param] [-f file] [-d directory]"
     echo '      -v | --verbose  | more detailed output to the console'
@@ -97,12 +88,10 @@ help() {
     echo '      -f | --file     | include a file'
     echo
 }
-
 wipe() {
     rm $file*
     create
 }
-
 clean() {
     while read line; do
         if [ "$line" = '------------' ]; then
@@ -118,7 +107,6 @@ clean() {
         fi
     done < $file
 }
-
 run() {
     validate
     # clean | clean ARGS | clean N ARGS
@@ -141,7 +129,6 @@ run() {
 # -----------------------------------------------------------------------------
 # ASSIST FUNCTIONS
 # -----------------------------------------------------------------------------
-
 contains() {
     for element in ${*:2}; do
         if [ $1 = $element ]; then
@@ -150,21 +137,18 @@ contains() {
     done
     return 1
 }
-
 integer() {
     case $1 in
         (*[!0-9]*|'') return 1 ;;
         (*) return 0 ;;
     esac
 }
-
 create() {
     echo '------------' > $file
     echo 'A CLEAN FILE' >> $file
     echo '------------' >> $file
     echo '------------' >> $file
 }
-
 loop() {
     for e in ${*}; do
         echo $e
@@ -174,7 +158,6 @@ loop() {
 # -----------------------------------------------------------------------------
 # GLOBAL
 # -----------------------------------------------------------------------------
-
 while getopts ':hiwvr:f:d:' flag; do
     case "${flag}" in
         h) help; exit ;;
